@@ -1,3 +1,6 @@
+"use client";
+
+
 import * as React from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -54,8 +57,8 @@ export default function AppAppBar() {
                 className="dark:invert"
                 src="/next.svg"
                 alt="Next.js logo"
-                width={180}
-                height={38}
+                width={80}
+                height={12}
                 priority
                 />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

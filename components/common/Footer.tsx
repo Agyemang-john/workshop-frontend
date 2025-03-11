@@ -18,8 +18,8 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://mui.com/">
-        Sitemark
+      <Link color="text.secondary" href="https://johnagyemang.pythonanywhere.com">
+        Explorer
       </Link>
       &nbsp;
       {new Date().getFullYear()}
@@ -62,8 +62,8 @@ export default function Footer() {
                 className="dark:invert"
                 src="/next.svg"
                 alt="Next.js logo"
-                width={180}
-                height={38}
+                width={100}
+                height={12}
                 priority
                 />
               <Typography
