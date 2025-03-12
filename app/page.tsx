@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Container from '@mui/material/Container';
 import MainContent from '@/components/MainContent'
+import { fetchWorkshops } from '@/lib/fetchWorkshop';
 
-export default function Home() {
+
+export default async function Home() {
+  const workshops = await fetchWorkshops()
   return (
     <Container
       maxWidth="lg"
