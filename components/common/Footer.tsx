@@ -13,9 +13,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+// import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+
 
 
 function Copyright() {
@@ -32,7 +34,7 @@ function Copyright() {
 }
 
 export default function Footer() {
-
+  const router = useRouter();
   const [email, setEmail] = useState("");
 
 const handleSubscribe = async () => {
@@ -111,9 +113,7 @@ const handleSubscribe = async () => {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-            <Link href={'/'}>
-              <Typography variant='h4' sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
-            </Link>
+              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
               <Typography
                 variant="body2"
                 gutterBottom
@@ -228,7 +228,7 @@ const handleSubscribe = async () => {
             <IconButton
               color="inherit"
               size="small"
-              href="https://github.com/mui"
+              href="https://github.com/Agyemang-john"
               aria-label="GitHub"
               sx={{ alignSelf: 'center' }}
             >
@@ -237,20 +237,11 @@ const handleSubscribe = async () => {
             <IconButton
               color="inherit"
               size="small"
-              href="https://x.com/MaterialUI"
+              href="https://x.com/oseiagyemanjohn"
               aria-label="X"
               sx={{ alignSelf: 'center' }}
             >
               <TwitterIcon />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              size="small"
-              href="https://www.linkedin.com/company/mui/"
-              aria-label="LinkedIn"
-              sx={{ alignSelf: 'center' }}
-            >
-              <LinkedInIcon />
             </IconButton>
           </Stack>
         </Box>

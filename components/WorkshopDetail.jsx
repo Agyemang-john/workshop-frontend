@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Box, Typography, Button, Paper, CircularProgress } from "@mui/material";
+import { Box, Typography, Button, Paper, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
@@ -89,17 +89,6 @@ const WorkshopDetail = () => {
             </Typography>
           </Grid>
         </Grid>
-
-        {/* Register Button */}
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 4, py: 1.5, fontSize: "1.1rem" }}
-          disabled={timeLeft === "Completed"}
-        >
-          {timeLeft === "Completed" ? "Workshop Completed" : "Register Now"}
-        </Button>
       </Paper>
     </div>
   );

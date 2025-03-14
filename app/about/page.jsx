@@ -1,3 +1,5 @@
+"use client";
+
 import { Container, Typography, Box, Button } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -5,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useRouter } from "next/navigation";
 
 const features = [
   { icon: <CheckCircleIcon fontSize="large" />, text: "Custom Forms - Build personalized registration forms." },
@@ -15,6 +18,7 @@ const features = [
 ];
 
 export default function AboutPage() {
+  const router = useRouter();
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
       <Box textAlign="center" mb={4}>
@@ -39,7 +43,7 @@ export default function AboutPage() {
       </Grid>
 
       <Box textAlign="center" mt={4}>
-        <Button variant="contained" color="primary" size="large">
+        <Button onClick={() => router.push("/")} variant="contained" color="primary" size="large">
           Get Started
         </Button>
       </Box>

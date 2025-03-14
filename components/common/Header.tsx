@@ -16,10 +16,13 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { Typography } from '@mui/material';
+import { useRouter } from "next/navigation";
+
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+
   justifyContent: 'space-between',
   flexShrink: 0,
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
@@ -31,6 +34,8 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 
 export default function AppAppBar() {
+    const router = useRouter();
+  
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -50,9 +55,9 @@ export default function AppAppBar() {
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, marginLeft: '5px'}}>
             <Link href={'/'}>
-              <Typography variant='h4' sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
+              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
             </Link>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               
@@ -63,6 +68,7 @@ export default function AppAppBar() {
               display: { xs: 'none', md: 'flex' },
               gap: 1,
               alignItems: 'center',
+              marginRight: '5px',
             }}
           >
             <Button color="primary" variant="text" size="small">
@@ -98,11 +104,8 @@ export default function AppAppBar() {
                   </IconButton>
                 </Box>
                 <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
                 <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem>
+                <MenuItem>About</MenuItem>
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
                   <Button color="primary" variant="contained" fullWidth>

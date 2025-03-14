@@ -14,7 +14,7 @@ async function getWorkshop(slug) {
 }
 
 export default async function WorkshopDetailPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
   const workshop = await getWorkshop(slug);
 
   if (!workshop) return notFound();
@@ -29,7 +29,7 @@ export default async function WorkshopDetailPage({ params }) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const workshop = await getWorkshop(slug);

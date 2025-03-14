@@ -39,6 +39,7 @@ export default function MainContent() {
   const [workshops, setWorkshops] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   console.log(workshops)
 
   useEffect(() => {
@@ -60,11 +61,21 @@ export default function MainContent() {
     loadWorkshops();
   }, []);
 
+  // const filteredWorkshops = useMemo(() => {
+  //   return selectedCategory === "All"
+  //     ? workshops
+  //     : workshops.filter((w) => w.category?.name === selectedCategory);
+  // }, [workshops, selectedCategory]);
+
   const filteredWorkshops = useMemo(() => {
-    return selectedCategory === "All"
-      ? workshops
-      : workshops.filter((w) => w.category?.name === selectedCategory);
-  }, [workshops, selectedCategory]);
+    return workshops
+      .filter((w) =>
+        selectedCategory === "All" ? true : w.category?.name === selectedCategory
+      )
+      .filter((w) =>
+        w.title.toLowerCase().includes(searchQuery.toLowerCase()) // Search filter
+      );
+  }, [workshops, selectedCategory, searchQuery]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -136,7 +147,24 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search />
+          <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
+            <OutlinedInput
+              size="small"
+              id="search"
+              placeholder="Search…"
+              sx={{ flexGrow: 1 }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} // Live search update
+              startAdornment={
+                <InputAdornment position="start" sx={{ color: "text.primary" }}>
+                  <SearchRoundedIcon fontSize="small" />
+                </InputAdornment>
+              }
+              inputProps={{
+                "aria-label": "search",
+              }}
+            />
+          </FormControl>
           <IconButton size="small" aria-label="RSS feed">
             <RssFeedRoundedIcon />
           </IconButton>

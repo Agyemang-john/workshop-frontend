@@ -207,8 +207,8 @@ const DetailPage = ({ workshop }) => {
     <>
     <WorkshopDetail/>
     <div className="flex justify-center items-center p-4">
-      <Button variant="contained" onClick={() => setOpen(true)}>
-        Register for Workshop
+      <Button disabled={workshop?.workshop_status === "Completed"} variant="contained" onClick={() => setOpen(true)}>
+        {workshop?.workshop_status === "Completed" ? "Workshop Completed" : "Register for Workshop"}
       </Button>
       <Modal
         open={open}
