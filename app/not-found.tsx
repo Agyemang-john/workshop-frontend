@@ -2,7 +2,6 @@
 
 import { Container, Typography, Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function NotFoundPage() {
   const router = useRouter();
