@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import DetailPage from '@/components/DetailPage';
 
 
@@ -19,6 +17,7 @@ async function getWorkshop(slug: string): Promise<Workshop | null> {
     if (!res.ok) return null;
     return res.json();
   } catch (error) {
+    console.warn(error)
     return null;
   }
 }
