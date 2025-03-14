@@ -51,6 +51,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 			description: workshop?.description || "This workshop does not exist.",
 		};
 	} catch (error) {
+    if (error) {
+      console.warn(error)
+    }
 		return {
 			title: "Workshop Not Found",
 			description: "This workshop does not exist.",
