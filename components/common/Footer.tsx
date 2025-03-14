@@ -74,7 +74,7 @@ const handleSubscribe = async () => {
     Swal.fire({
       icon: "error",
       title: "Something went wrong",
-      text: "Please try again later.",
+      text: "Please try again later." || {error},
     });
   }
 };
