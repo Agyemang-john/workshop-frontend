@@ -1,4 +1,7 @@
-import * as React from 'react';
+"use client";
+
+
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -13,6 +16,8 @@ import FacebookIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import Image from "next/image";
+import Swal from "sweetalert2";
+
 
 function Copyright() {
   return (
@@ -28,6 +33,55 @@ function Copyright() {
 }
 
 export default function Footer() {
+
+  const [email, setEmail] = useState("");
+
+const handleSubscribe = async () => {
+  if (!email) {
+    Swal.fire({
+      icon: "warning",
+      title: "Oops...",
+      text: "Please enter an email address!",
+    });
+    return;
+  }
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/subscribe/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      Swal.fire({
+        icon: "success",
+        title: "Subscribed!",
+        text: data.message || "You have successfully subscribed.",
+      });
+      setEmail(""); // Clear input after success
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Subscription Failed",
+        text: data.error || "Email may already be registered.",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Something went wrong",
+      text: "Please try again later.",
+    });
+  }
+};
+
+
+
   return (
     <React.Fragment>
       <Divider />
@@ -58,14 +112,9 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              <Image
-                className="dark:invert"
-                src="/next.svg"
-                alt="Next.js logo"
-                width={100}
-                height={12}
-                priority
-                />
+            <Link href={'/'}>
+              <Typography variant='h4' sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
+            </Link>
               <Typography
                 variant="body2"
                 gutterBottom
@@ -78,31 +127,22 @@ export default function Footer() {
               </Typography>
               <InputLabel htmlFor="email-newsletter">Email</InputLabel>
               <Stack direction="row" spacing={1} useFlexGap>
-                <TextField
-                  id="email-newsletter"
-                  hiddenLabel
-                  size="small"
-                  variant="outlined"
-                  fullWidth
-                  aria-label="Enter your email address"
-                  placeholder="Your email address"
-                  slotProps={{
-                    htmlInput: {
-                      autoComplete: 'off',
-                      'aria-label': 'Enter your email address',
-                    },
-                  }}
-                  sx={{ width: '250px' }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  sx={{ flexShrink: 0 }}
-                >
-                  Subscribe
-                </Button>
-              </Stack>
+              <TextField
+                id="email-newsletter"
+                hiddenLabel
+                size="small"
+                variant="outlined"
+                fullWidth
+                aria-label="Enter your email address"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ width: "250px" }}
+              />
+              <Button variant="contained" color="primary" size="small" sx={{ flexShrink: 0 }} onClick={handleSubscribe}>
+                Subscribe
+              </Button>
+            </Stack>
             </Box>
           </Box>
           <Box
@@ -115,19 +155,10 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
               Product
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
-              Features
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Testimonials
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Highlights
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="https://johnagyemang.pythonanywhere.com">
               Pricing
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="https://johnagyemang.pythonanywhere.com">
               FAQs
             </Link>
           </Box>
@@ -141,15 +172,10 @@ export default function Footer() {
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
               Company
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="/about">
               About us
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Careers
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Press
-            </Link>
+         
           </Box>
           <Box
             sx={{
