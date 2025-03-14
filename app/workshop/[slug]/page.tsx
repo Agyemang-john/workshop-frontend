@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import Box from '@mui/material/Box';
-import DetailPage from '@/components/DetailPage';
-
+import Box from "@mui/material/Box";
+import DetailPage from "@/components/DetailPage";
+import { Metadata } from "next";
 
 interface Workshop {
   title: string;
@@ -17,19 +17,24 @@ async function getWorkshop(slug: string): Promise<Workshop | null> {
     if (!res.ok) return null;
     return res.json();
   } catch (error) {
-    console.warn(error)
+    console.warn(error);
     return null;
   }
 }
 
-export default async function WorkshopDetailPage({ params }: { params: { slug: string } }) {
-  const { slug } = params; // ❌ Remove `await`
+// ✅ Correct `params` type
+interface WorkshopDetailPageProps {
+  params: { slug: string };
+}
+
+export default async function WorkshopDetailPage({ params }: WorkshopDetailPageProps) {
+  const { slug } = params;
   const workshop = await getWorkshop(slug);
 
   if (!workshop) return notFound();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div>
         <DetailPage workshop={workshop} />
       </div>
@@ -37,8 +42,9 @@ export default async function WorkshopDetailPage({ params }: { params: { slug: s
   );
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const { slug } = params; // ❌ Remove `await`
+// ✅ Correct `params` type for metadata
+export async function generateMetadata({ params }: WorkshopDetailPageProps): Promise<Metadata> {
+  const { slug } = params;
 
   try {
     const workshop = await getWorkshop(slug);
