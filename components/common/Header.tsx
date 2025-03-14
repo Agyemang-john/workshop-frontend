@@ -25,13 +25,14 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
   backdropFilter: 'blur(24px)',
   border: '1px solid',
-  borderColor: (theme.vars || theme).palette.divider,
-  backgroundColor: theme.vars
+  borderColor: theme.palette.divider, // Remove vars fallback
+  backgroundColor: theme.vars?.palette?.background?.defaultChannel
     ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.4)`
     : alpha(theme.palette.background.default, 0.4),
-  boxShadow: (theme.vars || theme).shadows[1],
+  boxShadow: theme.shadows[1],
   padding: '8px 12px',
 }));
+
 
 export default function AppAppBar() {
   const [open, setOpen] = React.useState(false);
