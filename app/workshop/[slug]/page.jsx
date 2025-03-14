@@ -1,17 +1,8 @@
 import { notFound } from "next/navigation";
 import Box from "@mui/material/Box";
 import DetailPage from "@/components/DetailPage";
-import { Metadata } from "next";
 
-interface Workshop {
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  cover_image: string;
-}
-
-async function getWorkshop(slug: string): Promise<Workshop | null> {
+async function getWorkshop(slug) {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/workshop/${slug}/`);
     if (!res.ok) return null;
@@ -22,12 +13,7 @@ async function getWorkshop(slug: string): Promise<Workshop | null> {
   }
 }
 
-// ✅ Correct `params` type
-interface WorkshopDetailPageProps {
-  params: { slug: string };
-}
-
-export default async function WorkshopDetailPage({ params }: WorkshopDetailPageProps) {
+export default async function WorkshopDetailPage({ params }) {
   const { slug } = params;
   const workshop = await getWorkshop(slug);
 
@@ -42,8 +28,7 @@ export default async function WorkshopDetailPage({ params }: WorkshopDetailPageP
   );
 }
 
-// ✅ Correct `params` type for metadata
-export async function generateMetadata({ params }: WorkshopDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }) {
   const { slug } = params;
 
   try {
