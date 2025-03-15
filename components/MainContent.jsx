@@ -22,6 +22,7 @@ export default function MainContent() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  console.log(workshops)
 
   useEffect(() => {
     const loadWorkshops = async () => {

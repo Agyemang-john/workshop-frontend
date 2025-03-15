@@ -41,6 +41,8 @@ const DetailPage = ({ workshop }) => {
   const initialState = { name: "", email: "", responses: {} };
   const [formData, dispatch] = useReducer(formReducer, initialState);
   const [isFormValid, setIsFormValid] = useState(false);
+  console.log(workshop);
+
   
   useEffect(() => {
     const loadFields = async () => {
