@@ -13,38 +13,21 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
 import WorkshopCard from "./WorkshopCard";
+import { CircularProgress } from "@mui/material";
 
-export function Search() {
-  return (
-    <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
-      <OutlinedInput
-        size="small"
-        id="search"
-        placeholder="Search…"
-        sx={{ flexGrow: 1 }}
-        startAdornment={
-          <InputAdornment position="start" sx={{ color: "text.primary" }}>
-            <SearchRoundedIcon fontSize="small" />
-          </InputAdornment>
-        }
-        inputProps={{
-          "aria-label": "search",
-        }}
-      />
-    </FormControl>
-  );
-}
 
 export default function MainContent() {
   const [workshops, setWorkshops] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   console.log(workshops)
 
   useEffect(() => {
     const loadWorkshops = async () => {
       try {
+        setLoading(true);
         const data = await fetchWorkshops();
         setWorkshops(data);
 
@@ -55,6 +38,8 @@ export default function MainContent() {
         setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching workshops:", error);
+      } finally{
+        setLoading(false);
       }
     };
 
@@ -77,13 +62,15 @@ export default function MainContent() {
       );
   }, [workshops, selectedCategory, searchQuery]);
 
+  if (loading) return <CircularProgress sx={{ display: "block", mx: "auto", mt: 5 }} />;
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           Explore & Register for Exciting Workshops!
         </Typography>
-        <Typography>
+        <Typography variant="body1" color="text.secondary">
           Discover and register for exciting workshops on our platform! Browse
           through a variety of workshops uploaded by organizers, learn more about
           each one, and secure your spot with a simple registration process.
@@ -100,10 +87,27 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search />
-        <IconButton size="small" aria-label="RSS feed">
-          <RssFeedRoundedIcon />
-        </IconButton>
+         <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
+            <OutlinedInput
+              size="small"
+              id="search"
+              placeholder="Search…"
+              sx={{ flexGrow: 1 }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)} // Live search update
+              startAdornment={
+                <InputAdornment position="start" sx={{ color: "text.primary" }}>
+                  <SearchRoundedIcon fontSize="small" />
+                </InputAdornment>
+              }
+              inputProps={{
+                "aria-label": "search",
+              }}
+            />
+          </FormControl>
+          <IconButton size="small" aria-label="RSS feed">
+            <RssFeedRoundedIcon />
+          </IconButton>
       </Box>
 
       <Box

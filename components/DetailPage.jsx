@@ -176,8 +176,6 @@ const DetailPage = ({ workshop }) => {
       );
   
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Server Error:", errorData);
         throw new Error("Registration failed");
       }
   
@@ -190,13 +188,22 @@ const DetailPage = ({ workshop }) => {
       dispatch({ type: "RESET", initialState });
       setOpen(false);
     } catch (error) {
-      console.error("Registration error:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Registration Failed",
-        text: "Something went wrong. Please try again.",
-        confirmButtonColor: "#d33",
-      });
+      setOpen(false);
+      if (error.response?.data?.non_field_errors) {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: error.response.data.non_field_errors[0],
+          confirmButtonColor: "#d33",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "Something went wrong. Please try again.",
+          confirmButtonColor: "#d33",
+        });
+      }   
     }
   };
   
@@ -264,7 +271,7 @@ const DetailPage = ({ workshop }) => {
                 {field.field_type === "select" && (
                   <FormControl fullWidth>
                     <InputLabel>{field.label}</InputLabel>
-                    <Select name={field.label} value={formData.responses[field.label] || ""} required={field.required} onChange={handleChange}>
+                    <Select label={field.label} name={field.label} value={formData.responses[field.label] || ""} required={field.required} onChange={handleChange}>
                       {field.options.choices.map((option, idx) => (
                         <MenuItem key={idx} value={option}>{option}</MenuItem>
                       ))}

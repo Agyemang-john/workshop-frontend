@@ -156,9 +156,6 @@ const Register = () => {
     return (
         <Container maxWidth="sm" sx={{ padding: 4 }}>
             <Box sx={{ textAlign: 'center', mb: 4 }}>
-                <Typography variant="h4" component="h1" gutterBottom>
-                    Get Started Today!
-                </Typography>
                 <Typography variant="body1" color="textSecondary">
                     Create an account to enjoy the benefits
                 </Typography>

@@ -2,7 +2,6 @@
 
 
 import * as React from 'react';
-import Link from 'next/link';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -56,9 +55,7 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, marginLeft: '5px'}}>
-            <Link href={'/'}>
               <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
-            </Link>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               
             </Box>
@@ -71,10 +68,10 @@ export default function AppAppBar() {
               marginRight: '5px',
             }}
           >
-            <Button color="primary" variant="text" size="small">
+            <Button color="primary" onClick={() => router.push(`${process.env.LOGIN_URL}`)} variant="text" size="small">
               Sign in
             </Button>
-            <Button color="primary" variant="contained" size="small">
+            <Button onClick={() => router.push("/register")} color="primary" variant="contained" size="small">
               Sign up
             </Button>
           </Box>
@@ -108,12 +105,12 @@ export default function AppAppBar() {
                 <MenuItem>About</MenuItem>
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
+                  <Button onClick={() => router.push("/register")} color="primary" variant="contained" fullWidth>
                     Sign up
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
+                  <Button onClick={() => router.push(`${process.env.LOGIN_URL}`)} color="primary" variant="outlined" fullWidth>
                     Sign in
                   </Button>
                 </MenuItem>
