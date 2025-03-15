@@ -281,7 +281,7 @@ const Register = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
                     <Typography variant="body2" color="textSecondary">
                         Already have an account?{' '}
-                        <Link href="/auth/email/">Sign in</Link>
+                        <Link href="https://workshop-nfwx.onrender.com/dashboard/login">Sign in</Link>
                     </Typography>
                     <Button
                         variant="contained"
