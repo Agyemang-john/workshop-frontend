@@ -105,7 +105,7 @@ const Register = () => {
   
               setSuccessMessage('Account created successfully! Please check your email to activate your account.');
               setErrors({});
-              window.location.href = process.env.LOGIN_URL;
+              window.location.href = "https://workshop-nfwx.onrender.com/dashboard/login";
           }
       } catch (error) {
         if (error.response && error.response.data) {
