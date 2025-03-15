@@ -105,7 +105,7 @@ const Register = () => {
   
               setSuccessMessage('Account created successfully! Please check your email to activate your account.');
               setErrors({});
-              router.push('/');
+              window.location.href = process.env.LOGIN_URL;
           }
       } catch (error) {
         if (error.response && error.response.data) {

@@ -68,7 +68,7 @@ export default function AppAppBar() {
               marginRight: '5px',
             }}
           >
-            <Button color="primary" onClick={() => router.push(`${process.env.LOGIN_URL}`)} variant="text" size="small">
+            <Button color="primary" onClick={() => window.location.href = `${process.env.LOGIN_URL}`} variant="text" size="small">
               Sign in
             </Button>
             <Button onClick={() => router.push("/register")} color="primary" variant="contained" size="small">
@@ -110,7 +110,7 @@ export default function AppAppBar() {
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button onClick={() => router.push(`${process.env.LOGIN_URL}`)} color="primary" variant="outlined" fullWidth>
+                  <Button onClick={() => window.location.href = `${process.env.LOGIN_URL}`} color="primary" variant="outlined" fullWidth>
                     Sign in
                   </Button>
                 </MenuItem>
