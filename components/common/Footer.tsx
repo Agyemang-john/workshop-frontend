@@ -48,7 +48,7 @@ const handleSubscribe = async () => {
   }
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/subscribe/`, {
+    const response = await fetch(`https://workshop-nfwx.onrender.com/api/subscribe/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

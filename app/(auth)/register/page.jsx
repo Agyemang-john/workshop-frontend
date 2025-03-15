@@ -85,7 +85,7 @@ const Register = () => {
         }
   
       try {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register/`, formData);
+          const response = await axios.post(`https://workshop-nfwx.onrender.com/api/auth/register/`, formData);
   
           if (response.status === 201) {  
               setFormData({

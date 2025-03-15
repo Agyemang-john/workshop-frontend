@@ -168,7 +168,7 @@ const DetailPage = ({ workshop }) => {
   
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/workshop/${workshop.id}/register/`,
+        `https://workshop-nfwx.onrender.com/api/workshop/${workshop.id}/register/`,
         {
           method: "POST",
           body: submissionFormData,
