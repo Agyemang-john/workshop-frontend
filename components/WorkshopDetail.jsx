@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid2";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Link from 'next/link';
 
 dayjs.extend(relativeTime);
 
@@ -85,7 +86,16 @@ const WorkshopDetail = () => {
           <Grid item xs={12} md={6}>
             <Typography variant="h6">Location:</Typography>
             <Typography variant="body1">
-              {workshop.location === "online" ? "Online (Google Meet)" : `Venue: ${workshop.venue_address}`}
+            {workshop.location === "online" ? (
+              <Link href={workshop.google_meet_link}>
+                Online (Google Meet)
+              </Link>
+            ) : (
+              <Link href={workshop.google_map_link}>
+                {`Venue: ${workshop.venue_address}`}
+              </Link>
+            )}
+
             </Typography>
           </Grid>
         </Grid>
