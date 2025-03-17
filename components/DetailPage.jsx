@@ -165,7 +165,7 @@ const DetailPage = ({ workshop }) => {
       }
     });
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://workshop-nfwx.onrender.com';
+    const apiUrl = 'https://workshop-nfwx.onrender.com';
     const url = `${apiUrl}/api/workshop/${workshop.id}/register/`;
   
     try {
