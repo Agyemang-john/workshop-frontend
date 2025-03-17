@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Box, Card, CardContent, CardMedia, Typography, Avatar, AvatarGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";
