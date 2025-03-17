@@ -5,6 +5,13 @@ import { useParams } from "next/navigation";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from 'next/link';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CategoryIcon from '@mui/icons-material/Category';
+import PlaceIcon from '@mui/icons-material/Place';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+import NavigationIcon from '@mui/icons-material/Navigation';
+import LanguageIcon from '@mui/icons-material/Language';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 dayjs.extend(relativeTime);
 
@@ -64,12 +71,12 @@ const WorkshopDetail = () => {
       />
 
       {/* Workshop Info */}
-      <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mt: 3 }}>
         <Typography variant="h4" fontWeight="bold">
           {workshop.title}
         </Typography>
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-          {workshop.category?.name} | {timeLeft}
+          <CategoryIcon/> {workshop.category?.name} | <AccessTimeIcon/> {dayjs(workshop.date).format("MMMM D, YYYY h:mm A")} | <CalendarMonthIcon/> {timeLeft}
         </Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
           {workshop.description}
@@ -78,21 +85,21 @@ const WorkshopDetail = () => {
         {/* Workshop Details */}
         <Grid container spacing={2} sx={{ mt: 3 }}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Typography variant="h6">Speaker(s):</Typography>
+            <Typography variant="h6"> <PersonPinIcon/> Speaker(s):</Typography>
             <Typography variant="body1">
               {workshop.speaker.map((s) => s.name).join(", ")}
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6">Location:</Typography>
+            <Typography variant="h6"> <PlaceIcon /> Location:</Typography>
             <Typography variant="body1">
             {workshop.location === "online" ? (
               <Link href={workshop.google_meet_link}>
-                Online (Google Meet)
+                <LanguageIcon/>  Online (Google Meet)
               </Link>
             ) : (
               <Link href={workshop.google_map_link}>
-                {`Venue: ${workshop.venue_address}`}
+                <NavigationIcon/>  {`Venue: ${workshop.venue_address}`}
               </Link>
             )}
 
