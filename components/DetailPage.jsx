@@ -18,6 +18,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Swal from "sweetalert2";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormLabel from '@mui/material/FormLabel';
+
+
+
 // Reducer for managing form state
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -166,8 +172,9 @@ const DetailPage = ({ workshop }) => {
     });
   
     try {
-      const response = await fetch(
-        `https://workshop-nfwx.onrender.com/api/workshop/${workshop.id}/register/`,
+      const url = `https://workshop-nfwx.onrender.com/api/workshop/${workshop.id}/register/`;
+      const url_2 = `http://localhost:8000/api/workshop/${workshop.id}/register/`;
+      const response = await fetch(url_2,
         {
           method: "POST",
           body: submissionFormData,
@@ -221,7 +228,7 @@ const DetailPage = ({ workshop }) => {
         handleClose={() => setOpen(false)}
         title="Workshop Registration"
         content={
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} autoComplete="off" className="space-y-4">
             <Grid size={{ xs: 12 }}>
               <TextField label="Name" fullWidth name="name" value={formData.name} onChange={handleChange} required />
             </Grid>
@@ -231,6 +238,7 @@ const DetailPage = ({ workshop }) => {
             {fields.map((field) => (
               <Grid key={field.id} size={{ xs: 12 }}>
                 {field.field_type === "text" && <TextField fullWidth name={field.label} label={field.label} onChange={handleChange} required={field.required} />}
+                {field.field_type === "multiline" && <TextField fullWidth multiline maxRows={6} name={field.label} label={field.label} onChange={handleChange} required={field.required} />}
                 {field.field_type === "number" && <TextField type="number" fullWidth name={field.label} label={field.label} required={field.required} onChange={handleChange} />}
                 {field.field_type === "file" && (
                   <div>
@@ -277,6 +285,45 @@ const DetailPage = ({ workshop }) => {
                     </Select>
                   </FormControl>
                 )}
+                {field.field_type === "radio" && (
+                  <>
+                  <FormControl fullWidth>
+                    <FormLabel id="demo-controlled-radio-buttons-group">{field.label}</FormLabel>
+                    <RadioGroup
+                      name={field.label}
+                      value={formData.responses[field.label] || ""}
+                      onChange={handleChange}
+                      required={field.required}
+                    >
+                      {field.options.choices.map((option, idx) => (
+                      <FormControlLabel key={idx} value={option} control={<Radio />} label={option} />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                  </>
+                )}
+
+                {field.field_type === "multi_select" && (
+                  <FormControl fullWidth>
+                    <InputLabel>{field.label}</InputLabel>
+                    <Select
+                      multiple
+                      name={field.label}
+                      value={formData.responses[field.label] || []} // Ensure default is an array
+                      onChange={handleChange}
+                      renderValue={(selected) => selected.join(", ")} // Show selected values as a string
+                    >
+                      {field.options.choices.map((option, idx) => (
+                        <MenuItem key={idx} value={option}>
+                          <Checkbox checked={formData.responses[field.label]?.includes(option)} />
+                          <ListItemText primary={option} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+
+
               </Grid>
             ))}
             <Button type="submit" disabled={!isFormValid} variant="contained" fullWidth>

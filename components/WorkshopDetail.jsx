@@ -17,7 +17,9 @@ const WorkshopDetail = () => {
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/workshop/${slug}/`);
+        const url = `https://workshop-nfwx.onrender.com/api/workshop/${slug}/`;
+        const url_2 = `http://localhost:8000/api/workshop/api/workshop/${slug}/`;
+        const res = await fetch(url_2);
         if (!res.ok) throw new Error("Failed to fetch workshop data");
         
         const data = await res.json();
