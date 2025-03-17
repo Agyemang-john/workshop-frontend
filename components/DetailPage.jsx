@@ -164,10 +164,13 @@ const DetailPage = ({ workshop }) => {
         submissionFormData.append(`responses[${field.id}][response_file]`, formData.responses[field.label]);
       }
     });
+
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://workshop-nfwx.onrender.com';
+    const url = `${apiUrl}/api/workshop/${workshop.id}/register/`;
   
     try {
       const response = await fetch(
-        `https://workshop-nfwx.onrender.com/api/workshop/${workshop.id}/register/`,
+        url,
         {
           method: "POST",
           body: submissionFormData,
