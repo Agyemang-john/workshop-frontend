@@ -102,7 +102,7 @@ export default function AppAppBar() {
                 </Box>
                 <MenuItem>Features</MenuItem>
                 <MenuItem>Highlights</MenuItem>
-                <MenuItem>About</MenuItem>
+                <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
                   <Button onClick={() => router.push("/register")} color="primary" variant="contained" fullWidth>
