@@ -58,6 +58,10 @@ interface WorkshopCardProps {
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({ workshop }) => {
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
   return (
       <StyledCard variant="outlined" tabIndex={0}>
         <Link href={`/workshop/${workshop.slug}`} passHref>
