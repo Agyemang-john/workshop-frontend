@@ -21,24 +21,65 @@ import Swal from "sweetalert2";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
-
+import ListItemText from "@mui/material/ListItemText";
 
 
 // Reducer for managing form state
+// const formReducer = (state, action) => {
+//   switch (action.type) {
+//     case "SET_STATIC_FIELD":
+//       return { ...state, [action.name]: action.value };
+//     case "SET_FIELD":
+//       return { ...state, responses: { ...state.responses, [action.name]: action.value } };
+//     case "SET_FILE":
+//       return { ...state, responses: { ...state.responses, [action.name]: action.file } };
+//     case "RESET":
+//       return action.initialState;
+//     default:
+//       return state;
+//   }
+// };
+
 const formReducer = (state, action) => {
   switch (action.type) {
     case "SET_STATIC_FIELD":
       return { ...state, [action.name]: action.value };
+
     case "SET_FIELD":
-      return { ...state, responses: { ...state.responses, [action.name]: action.value } };
+      return {
+        ...state,
+        responses: {
+          ...state.responses,
+          [action.name]: action.value,
+        },
+      };
+
+    case "SET_MULTISELECT":
+      return {
+        ...state,
+        responses: {
+          ...state.responses,
+          [action.name]: action.value, // Store selected array
+        },
+      };
+
     case "SET_FILE":
-      return { ...state, responses: { ...state.responses, [action.name]: action.file } };
+      return {
+        ...state,
+        responses: {
+          ...state.responses,
+          [action.name]: action.file,
+        },
+      };
+
     case "RESET":
       return action.initialState;
+
     default:
       return state;
   }
 };
+
 
 const DetailPage = ({ workshop }) => {
   const [open, setOpen] = useState(false);
@@ -47,6 +88,7 @@ const DetailPage = ({ workshop }) => {
   const initialState = { name: "", email: "", responses: {} };
   const [formData, dispatch] = useReducer(formReducer, initialState);
   const [isFormValid, setIsFormValid] = useState(false);
+  console.log(formData)
   
   useEffect(() => {
     const loadFields = async () => {
@@ -63,14 +105,31 @@ const DetailPage = ({ workshop }) => {
     setIsFormValid(!missingFields); // Disable button if any required field is missing
   }, [fields, formData]); // Re-run whenever formValues change  
 
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "name" || name === "email") {
+  //     dispatch({ type: "SET_STATIC_FIELD", name, value });
+  //   } else {
+  //     dispatch({ type: "SET_FIELD", name, value });
+  //   }
+  // };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
+  
     if (name === "name" || name === "email") {
       dispatch({ type: "SET_STATIC_FIELD", name, value });
     } else {
       dispatch({ type: "SET_FIELD", name, value });
     }
   };
+  
+  // Handle multi-select specifically
+  const handleMultiSelectChange = (event) => {
+    const { name, value } = event.target;
+    dispatch({ type: "SET_MULTISELECT", name, value });
+  };
+
 
   const handleFileChange = (event) => {
     dispatch({ type: "SET_FILE", name: event.target.name, file: event.target.files[0] });
@@ -150,16 +209,34 @@ const DetailPage = ({ workshop }) => {
     const submissionFormData = new FormData(); // Use for file uploads only
   
     // JSON Payload
+    // const jsonData = {
+    //   workshop: workshop.id,
+    //   name: formData.name,
+    //   email: formData.email,
+    //   responses: fields.map((field) => ({
+    //     field: field.id,
+    //     response_text: field.field_type !== "file" ? (formData.responses?.[field.label] || "") : null,
+    //   })),
+    // };
+
     const jsonData = {
       workshop: workshop.id,
       name: formData.name,
       email: formData.email,
-      responses: fields.map((field) => ({
-        field: field.id,
-        response_text: field.field_type !== "file" ? (formData.responses?.[field.label] || "") : null,
-      })),
+      responses: fields.map((field) => {
+        let responseValue = formData.responses?.[field.label] || "";
+        
+        // Handle multi-select fields properly
+        if (field.field_type === "multi_select") {
+          responseValue = Array.isArray(responseValue) ? responseValue : [];
+        }
+
+        return {
+          field: field.id,
+          response_text: field.field_type !== "file" ? responseValue : null,
+        };
+      }),
     };
-  
     // Append JSON as a string
     submissionFormData.append("json_data", JSON.stringify(jsonData));
   
@@ -170,11 +247,13 @@ const DetailPage = ({ workshop }) => {
         submissionFormData.append(`responses[${field.id}][response_file]`, formData.responses[field.label]);
       }
     });
+
+    const apiUrl = 'https://workshop-nfwx.onrender.com';
+    const url = `${apiUrl}/api/workshop/${workshop.id}/register/`;
   
     try {
-      const url = `https://workshop-nfwx.onrender.com/api/workshop/${workshop.id}/register/`;
       const url_2 = `http://localhost:8000/api/workshop/${workshop.id}/register/`;
-      const response = await fetch(url_2,
+      const response = await fetch(url,
         {
           method: "POST",
           body: submissionFormData,
@@ -238,7 +317,7 @@ const DetailPage = ({ workshop }) => {
             {fields.map((field) => (
               <Grid key={field.id} size={{ xs: 12 }}>
                 {field.field_type === "text" && <TextField fullWidth name={field.label} label={field.label} onChange={handleChange} required={field.required} />}
-                {field.field_type === "multiline" && <TextField fullWidth multiline maxRows={6} name={field.label} label={field.label} onChange={handleChange} required={field.required} />}
+                {field.field_type === "multiline" && <TextField value={formData.responses[field.label] || ""} fullWidth multiline maxRows={6} name={field.label} label={field.label} onChange={handleChange} required={field.required} />}
                 {field.field_type === "number" && <TextField type="number" fullWidth name={field.label} label={field.label} required={field.required} onChange={handleChange} />}
                 {field.field_type === "file" && (
                   <div>
@@ -294,6 +373,7 @@ const DetailPage = ({ workshop }) => {
                       value={formData.responses[field.label] || ""}
                       onChange={handleChange}
                       required={field.required}
+                      
                     >
                       {field.options.choices.map((option, idx) => (
                       <FormControlLabel key={idx} value={option} control={<Radio />} label={option} />
@@ -309,19 +389,21 @@ const DetailPage = ({ workshop }) => {
                     <Select
                       multiple
                       name={field.label}
-                      value={formData.responses[field.label] || []} // Ensure default is an array
-                      onChange={handleChange}
-                      renderValue={(selected) => selected.join(", ")} // Show selected values as a string
+                      label={field.label}
+                      value={formData.responses[field.label] || []} // Default to array
+                      onChange={handleMultiSelectChange}
+                      renderValue={(selected) => selected.join(", ")} // Show selected values as string
                     >
                       {field.options.choices.map((option, idx) => (
                         <MenuItem key={idx} value={option}>
-                          <Checkbox checked={formData.responses[field.label]?.includes(option)} />
+                          {/* <Checkbox checked={formData.responses[field.label]?.includes(option)} /> */}
                           <ListItemText primary={option} />
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 )}
+
 
 
               </Grid>

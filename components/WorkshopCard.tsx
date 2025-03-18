@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Box, Card, CardContent, CardMedia, Typography, Avatar, AvatarGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -58,6 +60,10 @@ interface WorkshopCardProps {
 }
 
 const WorkshopCard: React.FC<WorkshopCardProps> = ({ workshop }) => {
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
+  console.log(process.env.NEXT_PUBLIC_API_URL, "Hellooooo");
   return (
       <StyledCard variant="outlined" tabIndex={0}>
         <Link href={`/workshop/${workshop.slug}`} passHref>

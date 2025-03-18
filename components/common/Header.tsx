@@ -55,7 +55,7 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, marginLeft: '5px'}}>
-              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
+              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black", cursor: 'pointer' }}>Workshop</Typography> {"   "}
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               
             </Box>
@@ -102,7 +102,7 @@ export default function AppAppBar() {
                 </Box>
                 <MenuItem>Features</MenuItem>
                 <MenuItem>Highlights</MenuItem>
-                <MenuItem>About</MenuItem>
+                <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
                   <Button onClick={() => router.push("/register")} color="primary" variant="contained" fullWidth>

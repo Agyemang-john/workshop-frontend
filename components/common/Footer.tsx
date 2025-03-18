@@ -113,7 +113,7 @@ const handleSubscribe = async () => {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black" }}>Workshop</Typography> {"   "}
+              <Typography variant='h5' onClick={() => router.push("/")} sx={{ fontWeight: 600, color: "black", cursor: 'pointer' }}>Workshop</Typography> {"   "}
               <Typography
                 variant="body2"
                 gutterBottom
