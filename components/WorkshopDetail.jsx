@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Paper, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import CopyUrlButton from "./CopyUrlButton";
 import { useParams } from "next/navigation";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -107,6 +108,12 @@ const WorkshopDetail = () => {
               </Link>
             )}
 
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6"> <PlaceIcon /> Location:</Typography>
+            <Typography variant="body1"> 
+              <CopyUrlButton /> 
             </Typography>
           </Grid>
         </Grid>
