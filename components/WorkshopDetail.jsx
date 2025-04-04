@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Paper, CircularProgress } from "@mui/material";
+import { Box, Typography, Paper, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CopyUrlButton from "./CopyUrlButton";
 import { useParams } from "next/navigation";
