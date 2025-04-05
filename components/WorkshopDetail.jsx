@@ -111,7 +111,7 @@ const WorkshopDetail = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6"> <PlaceIcon /> Location:</Typography>
+            <Typography variant="h6"> <PlaceIcon /> Copy link:</Typography>
             <Typography variant="body1"> 
               <CopyUrlButton /> 
             </Typography>
