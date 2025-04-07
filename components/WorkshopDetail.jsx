@@ -13,6 +13,7 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import LanguageIcon from '@mui/icons-material/Language';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import ShareIcon from '@mui/icons-material/Share';
 
 dayjs.extend(relativeTime);
 
@@ -111,7 +112,7 @@ const WorkshopDetail = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6"> <PlaceIcon /> Copy link:</Typography>
+            <Typography variant="h6"> <ShareIcon /> Share link:</Typography>
             <Typography variant="body1"> 
               <CopyUrlButton /> 
             </Typography>
