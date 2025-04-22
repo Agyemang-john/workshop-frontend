@@ -274,11 +274,13 @@ const DetailPage = ({ workshop }) => {
       setOpen(false);
     } catch (error) {
       setOpen(false);
-      if (error.response?.data?.non_field_errors) {
+      const errorData = error.response?.data;
+    
+      if (errorData?.email) {
         Swal.fire({
           icon: "error",
           title: "Registration Failed",
-          text: error.response.data.non_field_errors[0],
+          text: errorData.email[0],
           confirmButtonColor: "#d33",
         });
       } else {
@@ -288,8 +290,9 @@ const DetailPage = ({ workshop }) => {
           text: "Something went wrong. Please try again.",
           confirmButtonColor: "#d33",
         });
-      }   
+      }
     }
+    
   };
   
   
@@ -390,6 +393,7 @@ const DetailPage = ({ workshop }) => {
                       multiple
                       name={field.label}
                       label={field.label}
+                      required={field.required}
                       value={formData.responses[field.label] || []} // Default to array
                       onChange={handleMultiSelectChange}
                       renderValue={(selected) => selected.join(", ")} // Show selected values as string
