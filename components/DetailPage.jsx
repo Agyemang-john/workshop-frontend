@@ -207,17 +207,6 @@ const DetailPage = ({ workshop }) => {
 
   
     const submissionFormData = new FormData(); // Use for file uploads only
-  
-    // JSON Payload
-    // const jsonData = {
-    //   workshop: workshop.id,
-    //   name: formData.name,
-    //   email: formData.email,
-    //   responses: fields.map((field) => ({
-    //     field: field.id,
-    //     response_text: field.field_type !== "file" ? (formData.responses?.[field.label] || "") : null,
-    //   })),
-    // };
 
     const jsonData = {
       workshop: workshop.id,
